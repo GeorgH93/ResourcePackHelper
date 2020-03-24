@@ -1,0 +1,30 @@
+# ResourcePackHelper Config File
+
+# Language Settings
+Language:
+  # Defines the used language and the corresponding file used. The corresponding language file will be placed in the lang folder next to the config.yml named: <Language>.yml
+  Language: en
+  # Options:
+  #     Overwrite (deletes all changes from the file and extracts a new language file)
+  #     Upgrade (extracts a new language file and copy's all settings from the old language file)
+  #     Update (adds the default (english) text values for all missing values, just some basic formatting)
+  UpdateMode: Upgrade
+
+TexturePacks:
+  MC_1_14:
+    URL: https://mc.pcgamingfreaks.at/resourcepacks/PCGF_1_14.zip
+    Hash: auto
+    MinMinecraftVersion: "1.14"
+    MaxMinecraftVersion: "1.14.4"
+  MC_1_15:
+    URL: https://mc.pcgamingfreaks.at/resourcepacks/PCGF_1_15.zip
+    Hash: auto
+    MinMinecraftVersion: "1.15"
+    MaxMinecraftVersion: "1.15.2"
+
+Misc:
+  # Enables/Disables the auto-update function of the plugin.
+  AutoUpdate: true
+
+# Config file version. Don't touch it!
+Version: 1

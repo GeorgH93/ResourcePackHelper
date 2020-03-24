@@ -1,0 +1,8 @@
+name: "${project.name}"
+author: "${author}"
+website: "${project.url}"
+main: "${mainClass}"
+description: "${project.description}"
+version: "${version}"
+api-version: "1.13"
+depend: [ ClientStats, ${dependencies} ]
