@@ -19,6 +19,7 @@ package at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database;
 
 import at.pcgamingfreaks.Bukkit.Configuration;
 import at.pcgamingfreaks.Database.DatabaseConnectionConfiguration;
+import at.pcgamingfreaks.ResourcePackHelper.Database.ResourcePack;
 import at.pcgamingfreaks.YamlFileManager;
 
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,7 +28,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Config extends Configuration implements DatabaseConnectionConfiguration
+public class Config extends Configuration
 {
 	private static final int CONFIG_VERSION = 1, UPGRADE_THRESHOLD = CONFIG_VERSION;
 
@@ -51,35 +52,6 @@ public class Config extends Configuration implements DatabaseConnectionConfigura
 	}
 
 	//region getter
-	public Map<Integer, ResourcePack> getTexturePacks()
-	{
-		Map<Integer, ResourcePack> texturePackMap = new HashMap<>();
-		getYamlE().getKeysFiltered("TexturePacks\\.[^.]*\\.URL").forEach(urlKey -> {
-			final String key = urlKey.substring(0, urlKey.length() - ".URL".length());
-			try
-			{
-				final String hash = getConfigE().getString(key + ".Hash", "auto"), url = getConfigE().getString(urlKey);
-				final String minVersion = getConfigE().getString(key + ".MinMinecraftVersion");
-				final String maxVersion = getConfigE().getString(key + ".MaxMinecraftVersion");
-				ResourcePack tp;
-				if(hash.equalsIgnoreCase("auto"))
-				{
-					tp = new ResourcePack(url, minVersion, maxVersion);
-				}
-				else
-				{
-					tp = new ResourcePack(url, hash, minVersion, maxVersion);
-				}
-				tp.addCompatibleMinecraftVersions(texturePackMap);
-			}
-			catch(Exception ignored)
-			{
-				plugin.getLogger().warning("Invalid texture pack definition: " + key);
-			}
-		});
-		return texturePackMap;
-	}
-
 	public boolean getAutoUpdate()
 	{
 		return getConfigE().getBoolean("Misc.AutoUpdate", true);

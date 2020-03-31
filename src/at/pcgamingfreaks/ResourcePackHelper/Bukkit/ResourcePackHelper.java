@@ -23,7 +23,7 @@ import at.pcgamingfreaks.ResourcePackHelper.Bukkit.Command.CommandManager;
 import at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database.Config;
 import at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database.Language;
 import at.pcgamingfreaks.StringUtils;
-import at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database.ResourcePack;
+import at.pcgamingfreaks.ResourcePackHelper.Database.ResourcePack;
 import at.pcgamingfreaks.Updater.UpdateProviders.BukkitUpdateProvider;
 import at.pcgamingfreaks.Updater.UpdateProviders.JenkinsUpdateProvider;
 import at.pcgamingfreaks.Updater.UpdateProviders.UpdateProvider;
@@ -142,7 +142,7 @@ public class ResourcePackHelper extends JavaPlugin implements Listener
 
 		clientStatsAPI = ClientStats.getApi();
 
-		texturePackMap = config.getTexturePacks();
+		texturePackMap = ResourcePack.loadResourcePacks(config, getLogger());
 
 		//region register events
 		PluginManager pluginManager = getServer().getPluginManager();

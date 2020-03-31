@@ -15,9 +15,10 @@
  *   along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-package at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database;
+package at.pcgamingfreaks.ResourcePackHelper.Database;
 
 import at.pcgamingfreaks.Bukkit.MCVersion;
+import at.pcgamingfreaks.Configuration;
 import at.pcgamingfreaks.ResourcePackHelper.Bukkit.ResourcePackHelper;
 
 import org.bukkit.entity.Player;
@@ -27,23 +28,57 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import javax.xml.bind.DatatypeConverter;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @Getter
 @AllArgsConstructor()
 public class ResourcePack
 {
+	private static final int BUFFER_SIZE = 1024;
+
+	public static Map<Integer, ResourcePack> loadResourcePacks(final @NotNull Configuration config, final @NotNull Logger logger)
+	{
+		Map<Integer, ResourcePack> texturePackMap = new HashMap<>();
+		config.getYamlE().getKeysFiltered("TexturePacks\\.[^.]*\\.URL").forEach(urlKey -> {
+			final String key = urlKey.substring(0, urlKey.length() - ".URL".length());
+			try
+			{
+				final String hash = config.getConfigE().getString(key + ".Hash", "auto"), url = config.getConfigE().getString(urlKey);
+				final String minVersion = config.getConfigE().getString(key + ".MinMinecraftVersion");
+				final String maxVersion = config.getConfigE().getString(key + ".MaxMinecraftVersion");
+				ResourcePack tp;
+				if(hash.equalsIgnoreCase("auto"))
+				{
+					tp = new ResourcePack(url, minVersion, maxVersion);
+				}
+				else
+				{
+					tp = new ResourcePack(url, hash, minVersion, maxVersion);
+				}
+				tp.addCompatibleMinecraftVersions(texturePackMap);
+			}
+			catch(Exception ignored)
+			{
+				logger.warning("Invalid texture pack definition: " + key);
+			}
+		});
+		return texturePackMap;
+	}
+
 	private final String url;
 	private byte[] hash = null;
 	private final MCVersion minVersion, maxVersion;
 
-	public ResourcePack(String url, String minVersion, String maxVersion)
+	public ResourcePack(final @NotNull String url, final @NotNull String minVersion, final @NotNull String maxVersion)
 	{
 		this.url = url;
 		this.minVersion = MCVersion.getFromVersionName(minVersion);
@@ -51,7 +86,7 @@ public class ResourcePack
 		hash();
 	}
 
-	public ResourcePack(String url, String hash, String minVersion, String maxVersion)
+	public ResourcePack(final @NotNull String url, final @NotNull String hash, final @NotNull String minVersion, final @NotNull String maxVersion)
 	{
 		this.url = url;
 		this.minVersion = MCVersion.getFromVersionName(minVersion);
@@ -70,7 +105,7 @@ public class ResourcePack
 		}
 	}
 
-	public boolean isCompatible(int protocolVersion)
+	public boolean isCompatible(final int protocolVersion)
 	{
 		return protocolVersion >= minVersion.getProtocolVersion() && protocolVersion <= maxVersion.getProtocolVersion();
 	}
@@ -93,9 +128,8 @@ public class ResourcePack
 		}
 	}
 
-	private void hash(URL url, int movedCount)
+	private void hash(final @NotNull URL url, int movedCount)
 	{
-		final int BUFFER_SIZE = 1024;
 		try
 		{
 			//region Allow url redirect
@@ -103,7 +137,7 @@ public class ResourcePack
 			connection.setInstanceFollowRedirects(false);
 			connection.setConnectTimeout(15000);
 			connection.setReadTimeout(15000);
-			switch (connection.getResponseCode())
+			switch(connection.getResponseCode())
 			{
 				case HttpURLConnection.HTTP_MOVED_PERM:
 				case HttpURLConnection.HTTP_MOVED_TEMP:
