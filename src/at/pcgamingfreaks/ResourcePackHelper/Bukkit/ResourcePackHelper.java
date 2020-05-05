@@ -17,6 +17,7 @@
 
 package at.pcgamingfreaks.ResourcePackHelper.Bukkit;
 
+import at.pcgamingfreaks.Bukkit.ManagedUpdater;
 import at.pcgamingfreaks.Bukkit.Message.Message;
 import at.pcgamingfreaks.Bukkit.Updater;
 import at.pcgamingfreaks.ResourcePackHelper.Bukkit.Command.CommandManager;
@@ -27,6 +28,7 @@ import at.pcgamingfreaks.ResourcePackHelper.Database.ResourcePack;
 import at.pcgamingfreaks.Updater.UpdateProviders.BukkitUpdateProvider;
 import at.pcgamingfreaks.Updater.UpdateProviders.JenkinsUpdateProvider;
 import at.pcgamingfreaks.Updater.UpdateProviders.UpdateProvider;
+import at.pcgamingfreaks.Updater.UpdateResponseCallback;
 import at.pcgamingfreaks.Version;
 
 import org.bukkit.entity.Player;
@@ -40,16 +42,16 @@ import org.jetbrains.annotations.Nullable;
 
 import fr.onecraft.clientstats.ClientStats;
 import fr.onecraft.clientstats.ClientStatsAPI;
+import lombok.Getter;
 
 import java.util.Map;
 
 public class ResourcePackHelper extends JavaPlugin implements Listener
 {
-	private static final int BUKKIT_PROJECT_ID = -1;
-	@SuppressWarnings("unused")
-	private static final String JENKINS_URL = "https://ci.pcgamingfreaks.at", JENKINS_JOB_DEV = "ResourcePackHelper", JENKINS_JOB_MASTER = "ResourcePackHelper", MIN_PCGF_PLUGIN_LIB_VERSION = "1.0.22-SNAPSHOT";
+	private static final String MIN_PCGF_PLUGIN_LIB_VERSION = "1.0.25-SNAPSHOT";
 	private static ResourcePackHelper instance = null;
 
+	@Getter private ManagedUpdater updater = null;
 	private ClientStatsAPI clientStatsAPI;
 	private Config config;
 	private Language lang;
@@ -62,15 +64,6 @@ public class ResourcePackHelper extends JavaPlugin implements Listener
 	public static ResourcePackHelper getInstance()
 	{
 		return instance;
-	}
-
-	public boolean isRunningInStandaloneMode()
-	{
-		/*if[STANDALONE]
-		return true;
-		else[STANDALONE]*/
-		return false;
-		/*end[STANDALONE]*/
 	}
 
 	@Override
@@ -92,13 +85,13 @@ public class ResourcePackHelper extends JavaPlugin implements Listener
 			return;
 		}
 		/*end[STANDALONE]*/
-
+		updater = new ManagedUpdater(this);
 		instance = this;
 		config = new Config(this);
 		lang = new Language(this);
 		load();
 
-		if(config.getAutoUpdate()) update(null);
+		if(config.getAutoUpdate()) updater.update();
 		getLogger().info(StringUtils.getPluginEnabledMessage(getDescription().getName()));
 	}
 
@@ -106,29 +99,11 @@ public class ResourcePackHelper extends JavaPlugin implements Listener
 	public void onDisable()
 	{
 		if(config == null) return;
-		Updater updater = null;
-		if(config.getAutoUpdate()) updater = update(null);
+		if(config.getAutoUpdate()) updater.update();
 		unload();
-		if(updater != null) updater.waitForAsyncOperation(); // Wait for updater to finish
+		updater.waitForAsyncOperation(); // Wait for updater to finish
 		getLogger().info(StringUtils.getPluginDisabledMessage(getDescription().getName()));
 		instance = null;
-	}
-
-	public @Nullable Updater update(@Nullable at.pcgamingfreaks.Updater.Updater.UpdaterResponse output)
-	{
-		UpdateProvider updateProvider;
-		if(getDescription().getVersion().contains("Release")) updateProvider = new BukkitUpdateProvider(BUKKIT_PROJECT_ID, getLogger());
-		else
-		{
-			/*if[STANDALONE]
-			updateProvider = new JenkinsUpdateProvider(JENKINS_URL, JENKINS_JOB_MASTER, getLogger(), ".*-Standalone.*");
-			else[STANDALONE]*/
-			updateProvider = new JenkinsUpdateProvider(JENKINS_URL, JENKINS_JOB_DEV, getLogger());
-			/*end[STANDALONE]*/
-		}
-		Updater updater = new Updater(this, this.getFile(), true, updateProvider);
-		updater.update(output);
-		return updater;
 	}
 
 	private void load()

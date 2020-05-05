@@ -1,0 +1,10 @@
+UpdateProviders:
+  Jenkins:
+    Type: Jenkins
+    Server: "https://ci.pcgamingfreaks.at"
+    Job: "ResourcePackHelper"
+
+UpdateChannels:
+  Master: [ Jenkins ]
+
+DefaultChannel: Master
