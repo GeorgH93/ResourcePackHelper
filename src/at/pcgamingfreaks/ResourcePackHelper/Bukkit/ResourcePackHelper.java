@@ -19,16 +19,11 @@ package at.pcgamingfreaks.ResourcePackHelper.Bukkit;
 
 import at.pcgamingfreaks.Bukkit.ManagedUpdater;
 import at.pcgamingfreaks.Bukkit.Message.Message;
-import at.pcgamingfreaks.Bukkit.Updater;
 import at.pcgamingfreaks.ResourcePackHelper.Bukkit.Command.CommandManager;
 import at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database.Config;
 import at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database.Language;
 import at.pcgamingfreaks.StringUtils;
 import at.pcgamingfreaks.ResourcePackHelper.Database.ResourcePack;
-import at.pcgamingfreaks.Updater.UpdateProviders.BukkitUpdateProvider;
-import at.pcgamingfreaks.Updater.UpdateProviders.JenkinsUpdateProvider;
-import at.pcgamingfreaks.Updater.UpdateProviders.UpdateProvider;
-import at.pcgamingfreaks.Updater.UpdateResponseCallback;
 import at.pcgamingfreaks.Version;
 
 import org.bukkit.entity.Player;
@@ -38,7 +33,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Nullable;
 
 import fr.onecraft.clientstats.ClientStats;
 import fr.onecraft.clientstats.ClientStatsAPI;
