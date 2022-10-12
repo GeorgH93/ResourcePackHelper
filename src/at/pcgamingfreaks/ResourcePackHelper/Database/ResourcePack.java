@@ -27,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.BufferedInputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -91,7 +90,17 @@ public class ResourcePack
 		this.url = url;
 		this.minVersion = MCVersion.getFromVersionName(minVersion);
 		this.maxVersion = MCVersion.getFromVersionName(maxVersion);
-		this.hash = DatatypeConverter.parseHexBinary(hash);
+		this.hash = hexToByteArray(hash);
+	}
+
+	private static byte[] hexToByteArray(final @NotNull String hexString)
+	{
+		byte[] data = new byte[hexString.length()];
+		for (int i = 0; i < data.length; i++)
+		{
+			data[i] = (byte) ((Character.digit(hexString.charAt(i * 2), 16) << 4) + Character.digit(hexString.charAt(i * 2 + 1), 16));
+		}
+		return data;
 	}
 
 	public void addCompatibleMinecraftVersions(final @NotNull Map<Integer, ResourcePack> texturePackMap)
