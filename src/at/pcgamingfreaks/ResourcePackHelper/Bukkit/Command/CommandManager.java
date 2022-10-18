@@ -33,13 +33,11 @@ import java.util.Locale;
 
 public class CommandManager extends CommandExecutorWithSubCommandsGeneric<ResourcePackHelperCommand>
 {
-	private final ResourcePackHelper plugin;
 	private final RegisterablePluginCommand backpackCommand;
 	private final Message helpFormat;
 
 	public CommandManager(@NotNull ResourcePackHelper plugin)
 	{
-		this.plugin = plugin;
 		// Registering the backpack command with the translated aliases
 		backpackCommand = new RegisterablePluginCommand(plugin, "resourcepackhelper", plugin.getLanguage().getCommandAliases("MainCommand"));
 		backpackCommand.registerCommand();
