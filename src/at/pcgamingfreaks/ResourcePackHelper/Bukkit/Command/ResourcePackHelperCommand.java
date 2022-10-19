@@ -54,7 +54,7 @@ public abstract class ResourcePackHelperCommand extends SubCommand
 	 * @param description The description of the command.
 	 * @param aliases     List of aliases for that command.
 	 */
-	public ResourcePackHelperCommand(@NotNull JavaPlugin plugin, @NotNull String name, @NotNull String description, @Nullable String... aliases)
+	protected ResourcePackHelperCommand(@NotNull JavaPlugin plugin, @NotNull String name, @NotNull String description, @Nullable String... aliases)
 	{
 		this(plugin, name, description, null, aliases);
 	}
@@ -68,7 +68,7 @@ public abstract class ResourcePackHelperCommand extends SubCommand
 	 * @param permission  The permission to be checked for this command. Players without the permission neither can use the command nor will they see it in help.
 	 * @param aliases     List of aliases for that command.
 	 */
-	public ResourcePackHelperCommand(@NotNull JavaPlugin plugin, @NotNull String name, @NotNull String description, @Nullable String permission, @Nullable String... aliases)
+	protected ResourcePackHelperCommand(@NotNull JavaPlugin plugin, @NotNull String name, @NotNull String description, @Nullable String permission, @Nullable String... aliases)
 	{
 		this(plugin, name, description, permission, false, aliases);
 	}
@@ -83,7 +83,7 @@ public abstract class ResourcePackHelperCommand extends SubCommand
 	 * @param playerOnly  Limits the command to players, console can't use and can't see the command.
 	 * @param aliases     List of aliases for that command.
 	 */
-	public ResourcePackHelperCommand(@NotNull JavaPlugin plugin, @NotNull String name, @NotNull String description, @Nullable String permission, boolean playerOnly, @Nullable String... aliases)
+	protected ResourcePackHelperCommand(@NotNull JavaPlugin plugin, @NotNull String name, @NotNull String description, @Nullable String permission, boolean playerOnly, @Nullable String... aliases)
 	{
 		super(name, description, permission, aliases);
 		this.plugin = plugin;
