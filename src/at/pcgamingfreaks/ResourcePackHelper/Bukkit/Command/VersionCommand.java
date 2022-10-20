@@ -26,19 +26,19 @@ import java.util.List;
 
 public class VersionCommand extends ResourcePackHelperCommand
 {
-	private final String ResourcePackHelperVersion;
+	private final String resourcePackHelperVersion;
 
 	public VersionCommand(ResourcePackHelper plugin)
 	{
 		super(plugin, "version", plugin.getLanguage().getTranslated("Commands.Description.Version"), "backpack.version", plugin.getLanguage().getCommandAliases("Version"));
-		ResourcePackHelperVersion = plugin.getDescription().getName() + ": " + plugin.getDescription().getVersion();
+		resourcePackHelperVersion = plugin.getDescription().getName() + ": " + plugin.getDescription().getVersion();
 	}
 
 	@Override
 	public void execute(@NotNull CommandSender sender, @NotNull String mainCommandAlias, @NotNull String alias, @NotNull String[] args)
 	{
 		sender.sendMessage("##### Start ResourcePackHelper version info #####");
-		sender.sendMessage(ResourcePackHelperVersion);
+		sender.sendMessage(resourcePackHelperVersion);
 		/*if_not[STANDALONE]*/
 		sender.sendMessage("PCGF PluginLib: " + at.pcgamingfreaks.PluginLib.Bukkit.PluginLib.getInstance().getVersion());
 		/*end[STANDALONE]*/
