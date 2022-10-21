@@ -27,4 +27,4 @@ Misc:
   AutoUpdate: true
 
 # Config file version. Don't touch it!
-Version: 1
+Version: "${version}"

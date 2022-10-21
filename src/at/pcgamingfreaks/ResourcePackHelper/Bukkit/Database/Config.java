@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2020 GeorgH93
+ *   Copyright (C) 2022 GeorgH93
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -20,35 +20,40 @@ package at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database;
 import at.pcgamingfreaks.Bukkit.Configuration;
 import at.pcgamingfreaks.Database.DatabaseConnectionConfiguration;
 import at.pcgamingfreaks.ResourcePackHelper.Database.ResourcePack;
+import at.pcgamingfreaks.Version;
 import at.pcgamingfreaks.YamlFileManager;
+import at.pcgamingfreaks.YamlFileUpdateMethod;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Config extends Configuration
 {
-	private static final int CONFIG_VERSION = 1, UPGRADE_THRESHOLD = CONFIG_VERSION;
-
 	public Config(JavaPlugin plugin)
 	{
-		super(plugin, CONFIG_VERSION, UPGRADE_THRESHOLD);
-		languageKey = "Language.Language";
-		languageUpdateKey = "Language.UpdateMode";
+		super(plugin, new Version(plugin.getDescription().getVersion()));
 	}
 
 	@Override
-	protected void doUpdate()
+	public @NotNull String getLanguageKey()
 	{
-		// Nothing to update yet
+		return "Language.Language";
 	}
 
 	@Override
-	protected void doUpgrade(@NotNull YamlFileManager oldConfig)
+	public @NotNull String getLanguageUpdateModeKey()
 	{
-		super.doUpgrade(oldConfig);
+		return "Language.UpdateMode";
+	}
+
+	@Override
+	protected @Nullable YamlFileUpdateMethod getYamlUpdateMode()
+	{
+		return YamlFileUpdateMethod.UPGRADE;
 	}
 
 	//region getter
