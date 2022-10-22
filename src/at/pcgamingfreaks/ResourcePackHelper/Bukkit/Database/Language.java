@@ -17,6 +17,7 @@
 
 package at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database;
 
+import at.pcgamingfreaks.Version;
 import at.pcgamingfreaks.YamlFileManager;
 
 import org.bukkit.plugin.java.JavaPlugin;
@@ -27,20 +28,9 @@ import java.util.List;
 
 public class Language extends at.pcgamingfreaks.Bukkit.Language
 {
-	private static final int LANG_VERSION = 1, UPGRADE_THRESHOLD = LANG_VERSION;
-
 	public Language(JavaPlugin plugin)
 	{
-		super(plugin, LANG_VERSION, UPGRADE_THRESHOLD);
-	}
-
-	@Override
-	protected void doUpdate() {}
-
-	@Override
-	protected void doUpgrade(@NotNull YamlFileManager oldLang)
-	{
-		super.doUpgrade(oldLang);
+		super(plugin, new Version(plugin.getDescription().getVersion()));
 	}
 
 	public String[] getCommandAliases(final String command)
