@@ -17,43 +17,16 @@
 
 package at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database;
 
-import at.pcgamingfreaks.Bukkit.Configuration;
-import at.pcgamingfreaks.Database.DatabaseConnectionConfiguration;
-import at.pcgamingfreaks.ResourcePackHelper.Database.ResourcePack;
+import at.pcgamingfreaks.Config.Configuration;
+import at.pcgamingfreaks.Config.ILanguageConfiguration;
+import at.pcgamingfreaks.ResourcePackHelper.Bukkit.ResourcePackHelper;
 import at.pcgamingfreaks.Version;
-import at.pcgamingfreaks.YamlFileManager;
-import at.pcgamingfreaks.YamlFileUpdateMethod;
 
-import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.HashMap;
-import java.util.Map;
-
-public class Config extends Configuration
+public class Config extends Configuration implements ILanguageConfiguration
 {
-	public Config(JavaPlugin plugin)
+	public Config(ResourcePackHelper plugin)
 	{
 		super(plugin, new Version(plugin.getDescription().getVersion()));
-	}
-
-	@Override
-	public @NotNull String getLanguageKey()
-	{
-		return "Language.Language";
-	}
-
-	@Override
-	public @NotNull String getLanguageUpdateModeKey()
-	{
-		return "Language.UpdateMode";
-	}
-
-	@Override
-	protected @Nullable YamlFileUpdateMethod getYamlUpdateMode()
-	{
-		return YamlFileUpdateMethod.UPGRADE;
 	}
 
 	//region getter

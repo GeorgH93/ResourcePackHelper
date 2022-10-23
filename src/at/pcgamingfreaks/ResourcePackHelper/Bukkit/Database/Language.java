@@ -1,5 +1,5 @@
 /*
- *   Copyright (C) 2020 GeorgH93
+ *   Copyright (C) 2022 GeorgH93
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
 
 package at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database;
 
+import at.pcgamingfreaks.ResourcePackHelper.Bukkit.ResourcePackHelper;
 import at.pcgamingfreaks.Version;
 import at.pcgamingfreaks.YamlFileManager;
 
@@ -26,9 +27,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Language extends at.pcgamingfreaks.Bukkit.Language
+public class Language extends at.pcgamingfreaks.Bukkit.Config.Language
 {
-	public Language(JavaPlugin plugin)
+	public Language(ResourcePackHelper plugin)
 	{
 		super(plugin, new Version(plugin.getDescription().getVersion()));
 	}

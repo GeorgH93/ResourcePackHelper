@@ -18,7 +18,7 @@
 package at.pcgamingfreaks.ResourcePackHelper.Database;
 
 import at.pcgamingfreaks.Bukkit.MCVersion;
-import at.pcgamingfreaks.Configuration;
+import at.pcgamingfreaks.Config.Configuration;
 import at.pcgamingfreaks.ResourcePackHelper.Bukkit.ResourcePackHelper;
 
 import org.bukkit.entity.Player;

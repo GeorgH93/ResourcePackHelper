@@ -19,6 +19,7 @@ package at.pcgamingfreaks.ResourcePackHelper.Bukkit;
 
 import at.pcgamingfreaks.Bukkit.ManagedUpdater;
 import at.pcgamingfreaks.Bukkit.Message.Message;
+import at.pcgamingfreaks.Plugin.IPlugin;
 import at.pcgamingfreaks.ResourcePackHelper.Bukkit.Command.CommandManager;
 import at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database.Config;
 import at.pcgamingfreaks.ResourcePackHelper.Bukkit.Database.Language;
@@ -33,6 +34,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import fr.onecraft.clientstats.ClientStats;
 import fr.onecraft.clientstats.ClientStatsAPI;
@@ -40,9 +42,9 @@ import lombok.Getter;
 
 import java.util.Map;
 
-public class ResourcePackHelper extends JavaPlugin implements Listener
+public class ResourcePackHelper extends JavaPlugin implements Listener, IPlugin
 {
-	private static final String MIN_PCGF_PLUGIN_LIB_VERSION = "1.0.25-SNAPSHOT";
+	private static final String MIN_PCGF_PLUGIN_LIB_VERSION = "1.0.37-SNAPSHOT";
 	private static ResourcePackHelper instance = null;
 
 	@Getter private ManagedUpdater updater = null;
@@ -159,5 +161,11 @@ public class ResourcePackHelper extends JavaPlugin implements Listener
 			if(tp != null) tp.apply(player);
 		}, 40);
 
+	}
+
+	@Override
+	public @NotNull Version getVersion()
+	{
+		return new Version(this.getDescription().getVersion());
 	}
 }
