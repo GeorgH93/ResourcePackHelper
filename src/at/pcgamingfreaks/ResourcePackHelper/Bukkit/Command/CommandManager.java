@@ -19,7 +19,7 @@ package at.pcgamingfreaks.ResourcePackHelper.Bukkit.Command;
 
 import at.pcgamingfreaks.Bukkit.Command.CommandExecutorWithSubCommandsGeneric;
 import at.pcgamingfreaks.Bukkit.Message.Message;
-import at.pcgamingfreaks.Bukkit.RegisterablePluginCommand;
+import at.pcgamingfreaks.Bukkit.Command.RegisterablePluginCommand;
 import at.pcgamingfreaks.Command.HelpData;
 import at.pcgamingfreaks.ConsoleColor;
 import at.pcgamingfreaks.ResourcePackHelper.Bukkit.ResourcePackHelper;
