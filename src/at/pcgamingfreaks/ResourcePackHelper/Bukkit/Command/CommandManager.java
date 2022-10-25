@@ -30,6 +30,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Locale;
+import java.util.logging.Level;
 
 public class CommandManager extends CommandExecutorWithSubCommandsGeneric<ResourcePackHelperCommand>
 {
@@ -57,8 +58,7 @@ public class CommandManager extends CommandExecutorWithSubCommandsGeneric<Resour
 		}
 		catch(Exception e)
 		{
-			plugin.getLogger().warning(ConsoleColor.RED + "Unable to set the help format. Default format will be used.\nMore details:" + ConsoleColor.RESET);
-			e.printStackTrace();
+			plugin.getLogger().log(Level.WARNING, ConsoleColor.RED + "Unable to set the help format. Default format will be used.\nMore details:" + ConsoleColor.RESET, e);
 		}
 
 		// Init backpack commands
