@@ -51,7 +51,7 @@ public class CommandManager extends CommandExecutorWithSubCommandsGeneric<Resour
 		try
 		{
 			// Show help function
-			Reflection.setStaticField(ResourcePackHelperCommand.class, "ResourcePackHelperPlugin", plugin); // Plugin instance
+			Reflection.setStaticField(ResourcePackHelperCommand.class, "resourcePackHelperPlugin", plugin); // Plugin instance
 			Reflection.setStaticField(ResourcePackHelperCommand.class, "showHelp", this.getClass().getDeclaredMethod("sendHelp", CommandSender.class, String.class, Collection.class));
 			Reflection.setStaticField(ResourcePackHelperCommand.class, "messageNoPermission", plugin.messageNoPermission); // No permission message
 			Reflection.setStaticField(ResourcePackHelperCommand.class, "messageNotFromConsole", plugin.messageNotFromConsole); // Not from console message

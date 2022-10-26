@@ -32,13 +32,14 @@ import org.jetbrains.annotations.Nullable;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Only available if the plugin is not running in standalone mode!
  */
 public abstract class ResourcePackHelperCommand extends SubCommand
 {
-	private static ResourcePackHelper ResourcePackHelperPlugin = null;
+	private static ResourcePackHelper resourcePackHelperPlugin = null;
 	private static Method showHelp = null;
 	private static Message messageNoPermission   = new Message(ChatColor.RED + "You don't have the permission to do that.");
 	private static Message messageNotFromConsole = new Message(ChatColor.RED + "This command can't be used from console!");
@@ -98,7 +99,7 @@ public abstract class ResourcePackHelperCommand extends SubCommand
 	 */
 	protected @NotNull ResourcePackHelper getResourcePackHelperPlugin()
 	{
-		return ResourcePackHelperPlugin;
+		return resourcePackHelperPlugin;
 	}
 
 	//region Command Stuff
@@ -183,7 +184,7 @@ public abstract class ResourcePackHelperCommand extends SubCommand
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			resourcePackHelperPlugin.getLogger().log(Level.SEVERE, "Failed to show help for command!", e);
 		}
 	}
 
