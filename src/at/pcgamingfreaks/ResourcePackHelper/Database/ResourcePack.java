@@ -36,6 +36,7 @@ import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Getter
@@ -133,7 +134,7 @@ public class ResourcePack
 		}
 		catch(MalformedURLException e)
 		{
-			e.printStackTrace();
+			ResourcePackHelper.getInstance().getLogger().log(Level.SEVERE, e, () -> "Invalid url '" + url + "'!");
 		}
 	}
 
@@ -173,7 +174,7 @@ public class ResourcePack
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			ResourcePackHelper.getInstance().getLogger().log(Level.SEVERE, e, () -> "Failed to calculate hash for '" + this.url + "'");
 		}
 	}
 }
