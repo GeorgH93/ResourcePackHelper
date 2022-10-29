@@ -39,7 +39,7 @@ public class Language extends at.pcgamingfreaks.Bukkit.Config.Language
 
 	public String[] getCommandAliases(final String command, final @NotNull String... defaults)
 	{
-		List<String> aliases = getLang().getStringList("Command." + command, new LinkedList<>());
-		return (aliases.size() > 0) ? aliases.toArray(new String[0]) : defaults;
+		List<String> aliases = getLangE().getStringList("Command." + command, new LinkedList<>());
+		return (!aliases.isEmpty()) ? aliases.toArray(new String[0]) : defaults;
 	}
 }
