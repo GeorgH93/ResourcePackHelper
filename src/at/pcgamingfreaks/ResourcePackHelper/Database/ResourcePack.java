@@ -161,7 +161,6 @@ public class ResourcePack
 					return;
 			}
 			//endregion
-			long fileLength = connection.getContentLengthLong();
 			MessageDigest hashGenerator = MessageDigest.getInstance("SHA1");
 			try(InputStream inputStream = new DigestInputStream(new BufferedInputStream(connection.getInputStream()), hashGenerator))
 			{
@@ -170,7 +169,6 @@ public class ResourcePack
 			}
 			connection.disconnect();
 			hash = hashGenerator.digest();
-
 		}
 		catch(Exception e)
 		{
