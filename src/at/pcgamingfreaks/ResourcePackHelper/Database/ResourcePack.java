@@ -165,7 +165,11 @@ public class ResourcePack
 			try(InputStream inputStream = new DigestInputStream(new BufferedInputStream(connection.getInputStream()), hashGenerator))
 			{
 				byte[] buffer = new byte[BUFFER_SIZE];
-				while(inputStream.read(buffer, 0, BUFFER_SIZE) != -1) {}
+				//noinspection StatementWithEmptyBody
+				while(inputStream.read(buffer, 0, BUFFER_SIZE) != -1)
+				{
+					// We have to just read the stream to the end to calculate the checksum 
+				}
 			}
 			connection.disconnect();
 			hash = hashGenerator.digest();
