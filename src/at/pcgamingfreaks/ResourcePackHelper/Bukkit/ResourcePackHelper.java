@@ -38,14 +38,16 @@ import org.jetbrains.annotations.NotNull;
 
 import fr.onecraft.clientstats.ClientStats;
 import fr.onecraft.clientstats.ClientStatsAPI;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
 
 public class ResourcePackHelper extends JavaPlugin implements Listener, IPlugin
 {
 	private static final String MIN_PCGF_PLUGIN_LIB_VERSION = "1.0.37-SNAPSHOT";
-	private static ResourcePackHelper instance = null;
+	@Getter @Setter(AccessLevel.PRIVATE) private static ResourcePackHelper instance = null;
 
 	@Getter private ManagedUpdater updater = null;
 	private ClientStatsAPI clientStatsAPI;
@@ -56,11 +58,6 @@ public class ResourcePackHelper extends JavaPlugin implements Listener, IPlugin
 	public Message messageNoPermission, messageNotFromConsole;
 
 	private CommandManager commandManager;
-
-	public static ResourcePackHelper getInstance()
-	{
-		return instance;
-	}
 
 	@Override
 	public void onEnable()
@@ -82,7 +79,7 @@ public class ResourcePackHelper extends JavaPlugin implements Listener, IPlugin
 		}
 		/*end[STANDALONE]*/
 		updater = new ManagedUpdater(this);
-		instance = this;
+		setInstance(this);
 		config = new Config(this);
 		lang = new Language(this);
 		load();
@@ -99,7 +96,7 @@ public class ResourcePackHelper extends JavaPlugin implements Listener, IPlugin
 		unload();
 		updater.waitForAsyncOperation(); // Wait for updater to finish
 		getLogger().info(StringUtils.getPluginDisabledMessage(getDescription().getName()));
-		instance = null;
+		setInstance(null);
 	}
 
 	private void load()
