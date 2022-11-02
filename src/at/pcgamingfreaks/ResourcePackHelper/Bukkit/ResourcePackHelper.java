@@ -51,13 +51,13 @@ public class ResourcePackHelper extends JavaPlugin implements Listener, IPlugin
 
 	@Getter private ManagedUpdater updater = null;
 	private ClientStatsAPI clientStatsAPI;
-	private Config config;
-	private Language lang;
+	@Getter private Config configuration;
+	@Getter private Language language;
 	private Map<Integer, ResourcePack> texturePackMap = null;
 
 	public Message messageNoPermission, messageNotFromConsole;
 
-	private CommandManager commandManager;
+	@Getter private CommandManager commandManager;
 
 	@Override
 	public void onEnable()
@@ -80,19 +80,19 @@ public class ResourcePackHelper extends JavaPlugin implements Listener, IPlugin
 		/*end[STANDALONE]*/
 		updater = new ManagedUpdater(this);
 		setInstance(this);
-		config = new Config(this);
-		lang = new Language(this);
+		configuration = new Config(this);
+		language = new Language(this);
 		load();
 
-		if(config.getAutoUpdate()) updater.update();
+		if(configuration.getAutoUpdate()) updater.update();
 		getLogger().info(StringUtils.getPluginEnabledMessage(getDescription().getName()));
 	}
 
 	@Override
 	public void onDisable()
 	{
-		if(config == null) return;
-		if(config.getAutoUpdate()) updater.update();
+		if(configuration == null) return;
+		if(configuration.getAutoUpdate()) updater.update();
 		unload();
 		updater.waitForAsyncOperation(); // Wait for updater to finish
 		getLogger().info(StringUtils.getPluginDisabledMessage(getDescription().getName()));
@@ -101,16 +101,16 @@ public class ResourcePackHelper extends JavaPlugin implements Listener, IPlugin
 
 	private void load()
 	{
-		lang.load(config);
+		language.load(configuration);
 
-		messageNotFromConsole  = lang.getMessage("NotFromConsole");
-		messageNotFromConsole  = lang.getMessage("NoPermission");
+		messageNotFromConsole  = language.getMessage("NotFromConsole");
+		messageNotFromConsole  = language.getMessage("NoPermission");
 
 		commandManager = new CommandManager(this);
 
 		clientStatsAPI = ClientStats.getApi();
 
-		texturePackMap = ResourcePack.loadResourcePacks(config, getLogger());
+		texturePackMap = ResourcePack.loadResourcePacks(configuration, getLogger());
 
 		//region register events
 		PluginManager pluginManager = getServer().getPluginManager();
@@ -128,23 +128,8 @@ public class ResourcePackHelper extends JavaPlugin implements Listener, IPlugin
 	public void reload()
 	{
 		unload();
-		config.reload();
+		configuration.reload();
 		load();
-	}
-
-	public Config getConfiguration()
-	{
-		return config;
-	}
-
-	public Language getLanguage()
-	{
-		return lang;
-	}
-
-	public CommandManager getCommandManager()
-	{
-		return commandManager;
 	}
 
 	@EventHandler
