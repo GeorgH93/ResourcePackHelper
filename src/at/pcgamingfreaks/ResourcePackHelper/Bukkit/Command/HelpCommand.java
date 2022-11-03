@@ -56,7 +56,6 @@ public class HelpCommand extends ResourcePackHelperCommand
 		}
 		commandManager.sendHelp(sender, mainCommandAlias, help);
 		messageFooter.send(sender);
-		//TODO: pages
 	}
 
 	@Override
