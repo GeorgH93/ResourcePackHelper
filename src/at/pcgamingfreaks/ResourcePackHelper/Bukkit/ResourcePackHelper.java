@@ -55,7 +55,7 @@ public class ResourcePackHelper extends JavaPlugin implements Listener, IPlugin
 	@Getter private Language language;
 	private Map<Integer, ResourcePack> texturePackMap = null;
 
-	public Message messageNoPermission, messageNotFromConsole;
+	@Getter private Message messageNoPermission, messageNotFromConsole;
 
 	@Getter private CommandManager commandManager;
 
