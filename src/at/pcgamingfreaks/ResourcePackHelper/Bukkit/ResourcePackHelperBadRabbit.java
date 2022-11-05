@@ -37,7 +37,7 @@ public class ResourcePackHelperBadRabbit extends BadRabbit
 		{
 			getLogger().info("PCGF-PluginLib not installed. Switching to standalone mode!");
 			Class<?> standaloneClass = Class.forName("at.pcgamingfreaks.ResourcePackHelperStandalone.Bukkit.ResourcePackHelper");
-			newPluginInstance = (JavaPlugin) standaloneClass.newInstance();
+			newPluginInstance = (JavaPlugin) standaloneClass.getDeclaredConstructor().newInstance();
 		}
 		else
 		{
